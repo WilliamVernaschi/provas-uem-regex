@@ -4,7 +4,7 @@
 set -e
 
 # Seleciona pasta de download padrão
-[ -d "$HOME/Documents" ] && DEFAULT_DOWNLOAD_LOC="$HOME/Documents" || DEFAULT_DOWNLOAD_LOC="$(pwd)"
+download_loc="$(pwd)"
 
 PDFTOTEXT_LOC=`which pdftotext`
 if [ -z "$PDFTOTEXT_LOC" ] || [ ! -f "$PDFTOTEXT_LOC" ] || [ ! -x "$PDFTOTEXT_LOC" ]
@@ -12,13 +12,6 @@ then
   echo "A utilidade pdftotext precisa estar instalada, ela está presente no pacote poppler ou poppler-utils, dependendo da sua distribuição."
   exit 1
 fi
-
-while read -p "As provas serão baixadas em ${DEFAULT_DOWNLOAD_LOC}, deixe em branco para confirmar, ou digite outro local (caminho absoluto): " download_loc
-do
-  [ -z "$download_loc" ] && download_loc=${DEFAULT_DOWNLOAD_LOC} && break || [ -d "$download_loc" ] && break || echo "${download_loc} Não existe"
-done
-
-download_loc="${download_loc// /}" 
 
 if [ ! -d "${download_loc}/uem_provas" ]; then
   mkdir "$download_loc/uem_provas"
@@ -28,6 +21,7 @@ elif [ ! -f "${download_loc}/uem_provas/.downloadnotcomplete" ]; then
 fi
 
 cd "$download_loc/uem_provas"
+echo "$download_loc/uem_provas" > .localprovas
 
 touch .downloadnotcomplete
 # baixando as provas
@@ -52,6 +46,8 @@ do
   echo "Transformando $prova em .txt..."
   pdftotext -q "$prova"
 done
+
+# formatando o nome de algumas pastas.
 for ano in $(find -type d)
 do
   if [ "${ano:2:3}" == 'pas' ]; then
@@ -66,4 +62,3 @@ do
     mv "$ano" "20${ano:4:2}-V"
   fi
 done
-echo "Sucesso"
