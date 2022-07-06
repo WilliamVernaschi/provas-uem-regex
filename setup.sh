@@ -40,7 +40,7 @@ rm .downloadnotcomplete
 # removendo alguns arquivos indesejados
 find . | grep -Pi '^(((?!gabarito(p?[1-4]|_prova_objetiva).html).)*\.html|.*resultado.*|.*indigenas.*)$' | xargs rm -rf
 
-if [ -d 'www.vestibular.uem.br' -a -d 'www.cvu.uem.br']
+if [ -d 'www.vestibular.uem.br' -a -d 'www.cvu.uem.br' ]
 then
   mv */* . && mv provas/* .
   rmdir www* provas
