@@ -4,7 +4,10 @@
 [ -f .tempanswers ] && rm .tempanswers
 [ -f .completeout ] && rm .completeout
 
-ls -d ~/uem_provas/* | sort -n | xargs -d '\n' egrep --color=always --group-separator=----------------------------- -ri -A 1 -B 1 --include "*.txt" "$1" | uniq | sed 's@/home/@file:/home/@g' | sed 's/\.txt/\.pdf /g' | tee .tempanswers | egrep --color=never -o  '/home[^ ]*/' | uniq | sed s@file:@@g > .tempgabarito
+ls -d ~/uem_provas/* | sort -n | xargs -d '\n' egrep --color=always\
+  --group-separator=----------------------------- -ri -A 1 -B 1 --include\
+  "*.txt" "$1" | uniq | sed 's@/home/@file:/home/@g' | sed 's/\.txt/\.pdf /g'\
+  | tee .tempanswers | egrep --color=never -o  '/home[^ ]*/' | uniq | sed s@file:@@g > .tempgabarito
 
 
 [ ! -s .tempanswers ] && echo "Nenhuma correspondência encontrada." && return 0
@@ -26,7 +29,8 @@ while read -r a; do
  echo -e $(tail -n 1 .tempgabarito)
  echo -e "Gabarito:\n$(tail -n 1 .tempgabarito)" >> .completeout
 
-  sed -i "s#^/home[^ ]*#\"find '&' | egrep -i '(.*gab.*|.*def.*)(\.html|\.pdf)' | sed 's@/home/@file:/home/@g'\"#g" .completeout
+  sed -i "s#^/home[^ ]*#\"find '&' | egrep -i '(.*gab.*|.*def.*)(\.html|\.pdf)' |
+sed 's@/home/@file:/home/@g'\"#g" .completeout
    while read line
    do
      if [ ${line:0:1} == \" ]
