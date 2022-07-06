@@ -7,7 +7,7 @@
 
 # busca as correspondências nas provas e a pastas onde estão os gabaritos dessas, e então
 # guarda nos arquivos temporários .tempanswers e .tempgabarito
-ls -d ~/uem_provas/* | sort -n | xargs -d '\n' egrep --color=always\
+ls -d ./uem_provas/* | sort -n | xargs -d '\n' egrep --color=always\
   --group-separator=----------------------------- -ri -A 1 -B 1 --include\
   "*.txt" "$1" | uniq | sed 's@/home/@file:/home/@g' | sed 's/\.txt/\.pdf /g'\
   | tee .tempanswers | egrep --color=never -o  '/home[^ ]*/' | uniq | sed s@file:@@g > .tempgabarito
