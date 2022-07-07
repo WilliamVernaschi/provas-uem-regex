@@ -29,7 +29,7 @@ touch .downloadnotcomplete
 # baixando as provas
 wget --quiet --show-progress --no-parent --recursive --no-clobber --tries=10 --timeout=30\
  --accept '*.html,*.pdf'\
- --reject '*g2*,*g3*,*g4*,*listao*,*[Ii]ndigenas*,*[Rr]esultado*,*[Cc]oncorrencia*,
+ --reject '*g2*,*g3*,*g4*,*listao*,*[Ii]ndigenas*,*[Rr]esultado*,*[Cc]oncorrencia*,*progpas*, 
  *[Mm]anual*,*[Ee]dital*,*[Ii]ndex*,*[Cc]otistas*,[Ee]statisticas,[Aa]provados,CT*.pdf,LG*.pdf,AP*.pdf,ES*.pdf'\
  https://www.cvu.uem.br/provas/ https://www.vestibular.uem.br/vestibulares_anteriores.html
 rm .downloadnotcomplete
