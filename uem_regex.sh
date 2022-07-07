@@ -5,6 +5,8 @@
 [ -f .tempanswers ] && rm .tempanswers
 [ -f .completeout ] && rm .completeout
 
+[ ! -d ./uem_provas ] && echo 'A pasta que contém as provas deve estar no mesmo diretório desse script. Se você tentou mover esse arquivo para um diretório do $PATH, crie um link ao invés.' && exit 0
+
 # busca as correspondências nas provas e a pastas onde estão os gabaritos dessas, e então
 # guarda nos arquivos temporários .tempanswers e .tempgabarito
 realpath ./uem_provas/* | sort -n | xargs -d '\n' egrep --color=always\
